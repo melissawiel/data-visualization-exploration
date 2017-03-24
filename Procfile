@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/data-visualization-exploration -Dhttp.port=$PORT $PLAY_OPTS
+web: play run --http.port=$PORT $PLAY_OPTS
