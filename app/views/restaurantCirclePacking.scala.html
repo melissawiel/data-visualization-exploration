@@ -1,0 +1,297 @@
+@()
+
+@main() {
+    <style>
+    text {
+    font-size : 15px !important ;
+    text-anchor : middle ;
+    text-shadow : 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff ;
+    }
+
+    .axis path,
+    .axis line {
+    fill : none ;
+    stroke : #000 ;
+    shape-rendering : crispEdges ;
+    }
+
+    .node {
+    cursor : pointer ;
+    }
+
+    circle : hover {
+    stroke : #3c70a0 ;
+    stroke-width : 2px ;
+    }
+
+    svg {
+    position : relative ;
+    margin-left : -164px ;
+    margin-top : 30px ;
+    }
+    </style>
+
+    <div class="col-lg-12 pa-viz-module">
+        <h2>Restaurant Circle Packing
+            <button id="previewData" class="btn glyphicon glyphicon-eye-open databtn" role="button" data-toggle="popover" data-trigger="focus" data-placement="bottom"></button>
+            <button class="btn glyphicon glyphicon-cloud-download databtn" id="gen_btn"></button>
+        </h2>
+        <div id="story">
+            <p>Maneuver through the different categorization levels to learn more about the restaurants that Charleston has to offer. The first level categorizes by neighborhood. The second level categorizes by food category. The third level categorizes by the average user ratings and nested inside this level are the resturants with a final count of how many users have reviewed them.</p>
+        </div>
+        <div id="chart">
+            <button class="btn" id="deselect">Deselect All</button>
+        </div>
+        <div id="tableDivOne" style="display : none">
+            <div id="tableDiv"></div>
+        </div>
+    </div>
+
+
+    <link rel="stylesheet" href="//rawgithub.com/Caged/d3-tip/master/examples/example-styles.css">
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="@routes.Assets.versioned("javascripts/d3.tip.js")"></script>
+    <script>
+            var w = 1438,
+                    h = 1000,
+                    r = 960,
+                    x = d3.scale.linear().range([0, r]),
+                    y = d3.scale.linear().range([0, r]),
+                    node,
+                    root;
+
+            var tip = d3.tip()
+                    .attr('class', 'd3-tip')
+                    .offset([-10, 0])
+                    .html(function(d) {
+                        console.log(d);
+                        var text = "";
+                        if(d.parent){
+                            if(d.parent.parent && d.parent.parent.name != "NONE" && d.parent.parent.name != "DEVICES"){
+                                text = text + d.parent.parent.name + " ";
+                            };
+
+                            if(d.parent.name != "NONE" && d.parent.name != "DEVICES"){
+                                text = text + d.parent.name + " ";
+                            }
+                        };
+
+                        if(d.name){
+                            if(d.name == "NONE"){
+                                text = text + "- NO DESCRIPTION";
+                            } else {
+                                text = text + d.name;
+                            };
+                        };
+
+                        if(d.reviewCount){
+                            if(d.reviewCount == 1){
+                                text = text + "<br/><strong>" + d.reviewCount + " DEVICE</strong>";
+                            } else {
+                                text = text + "<br/><strong>" + d.reviewCount + " DEVICES</strong>";
+                            };
+                        };
+
+                        return text;
+                        console.log(text);
+                    })
+
+            var pack = d3.layout.pack()
+                    .padding(2)
+                    .size([r, r])
+                    .value(function(d) { return d.reviewCount; });
+
+            var color = d3.scale.ordinal()
+                    .range(["#CCDCEA","#99BAD5","#005295","#6697BF","#3375AA"]);
+
+            var vis = d3.select(".pa-viz-module").insert("svg:svg", "h1")
+                    .attr("width", w)
+                    .attr("height", h)
+                    .append("svg:g")
+                    .attr("transform", "translate(" + (w - r) / 2 + "," + (h - r) / 2 + ")");
+
+            vis.call(tip);
+
+            d3.json("/restaurantCirclePacking.json", function(data) {
+
+                node = root = data;
+
+                var nodes = pack.nodes(root);
+
+                vis.selectAll("circle")
+                        .data(nodes)
+                        .enter().append("svg:circle")
+                        .attr("class", function(d) { return d.children ? "parent" : "child"; })
+                        .style("fill", function(d) { return d.children ? color(d.depth) : "#fff"; })
+                        .attr("cx", function(d) { return d.x; })
+                        .attr("cy", function(d) { return d.y; })
+                        .attr("r", function(d) { return d.r; })
+                        .on("click", function(d) { return zoom(node == d ? root : d); })
+                        .on('mouseover', tip.show)
+                        .on('mouseout', tip.hide);
+
+                vis.selectAll("text")
+                        .data(nodes)
+                        .enter().append("svg:text")
+                        .attr("class", function(d) { return d.children ? "parent" : "child"; })
+                        .attr("x", function(d) { return d.x; })
+                        .attr("y", function(d) { return d.y; })
+                        .attr("dy", ".35em")
+                        .style("display", function(d) { return d.parent === root ? null : "none"; })
+                        .attr("text-anchor", "middle")
+                        .style("opacity", function(d) { return d.r > 20 ? 1 : 0; })
+                        .text(function(d) {
+                            return d.name;
+                        });
+
+                d3.select(window).on("click", function() { zoom(root); });
+            });
+
+
+            function zoom(d, i) {
+                var focus0 = focus; focus = d;
+
+                var k = r / d.r / 2;
+                x.domain([d.x - d.r, d.x + d.r]);
+                y.domain([d.y - d.r, d.y + d.r]);
+
+                var t = vis.transition()
+                        .duration(d3.event.altKey ? 7500 : 750);
+
+                t.selectAll("text")
+                        .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
+                        .style("fill-opacity", function(d) { return d.parent === focus ? 1 : 0; })
+                        .each("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
+                        .each("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
+
+                t.selectAll("circle")
+                        .attr("cx", function(d) { return x(d.x);  })
+                        .attr("cy", function(d) { return y(d.y);  })
+                        .attr("r", function(d)  { return k * d.r; });
+
+                // updateCounter is a hacky way to determine when transition is finished
+                var updateCounter = 0;
+
+                t.selectAll("text")
+                        .style("opacity", 0)
+                        .attr("x", function(d) { return x(d.x); })
+                        .attr("y", function(d) { return y(d.y); })
+                        .each(function(d, i) {
+                            updateCounter++;
+                        })
+                        .each("end", function(d, i) {
+                            updateCounter--;
+                            if (updateCounter == 0) {
+                                adjustLabels(k);
+                            }
+                        });
+
+                node = d;
+                d3.event.stopPropagation();
+            }
+
+
+            function adjustLabels(k) {
+                vis.selectAll("text")
+                        .style("opacity", function(d) {
+                            return k * d.r > 20 ? 1 : 0;
+                        })
+                        .text(function(d) {
+                            return d.name;
+                        })
+                        .filter(function(d) {
+                            d.tw = this.getComputedTextLength();
+                            return (Math.PI*(k*d.r)/2) < d.tw;
+                        })
+                        .each(function(d) {
+                            var proposedLabel = d.name;
+                            var proposedLabelArray = proposedLabel.split('');
+                            while ((d.tw > (Math.PI*(k*d.r)/2) && proposedLabelArray.length)) {
+                                // pull out 3 chars at a time to speed things up (one at a time is too slow)
+                                proposedLabelArray.pop();proposedLabelArray.pop(); proposedLabelArray.pop();
+                                if (proposedLabelArray.length===0) {
+                                    proposedLabel = "";
+                                } else {
+                                    proposedLabel = proposedLabelArray.join('') + "..."; // manually truncate with ellipsis
+                                }
+                                d3.select(this).text(proposedLabel);
+                                d.tw = this.getComputedTextLength();
+                            }
+                        });
+            }
+
+            d3.select("body")
+                    .on("click", function() { zoom(root); });
+
+//            function createTable(data){
+//                var length = 10;
+//                if(data.length < length){
+//                    length = data.length;
+//                };
+//
+//                var tbody = '';
+//
+//                var theader = '<table id="example" class="display" cellspacing="0" width="100%" style="margin-bottom: 20px;"><thead><tr><th>MANUFACTURER</th><th>DEVICE TYPE</th><th>DESCRIPTION</th><th>COUNT</th></tr></thead><tbody>';
+//
+//                for(i=0; i<=length-1; i++){
+//                    tbody += '<tr>';
+//                    tbody += '<td>';
+//                    tbody += data[i].manufacturer;
+//                    tbody += '</td>';
+//                    tbody += '<td>';
+//                    tbody += data[i].deviceType;
+//                    tbody += '</td>';
+//                    tbody += '<td>';
+//                    tbody += data[i].description;
+//                    tbody += '</td>';
+//                    tbody += '<td>';
+//                    tbody += data[i].count;
+//                    tbody += '</td>';
+//                    tbody += '</tr>';
+//                };
+//
+//                var tfooter = '</tbody></table>';
+//                document.getElementById('tableDiv').innerHTML = '<span id="counter">Showing 1 to ' + length + ' of ' + data.length + ' entries</span>'+theader + tbody;
+//                $('#example').dataTable({
+//                    searching: false,
+//                    paging: false,
+//                    info: false,
+//                    ordering: false
+//                });
+//            };
+//
+//            d3.json("/da1cache/devices/manufacturers/notes/aggregates/flat", function (data) {
+//                data.map(function(d){
+//                    if(d.manufacturer.trim()==""){
+//                        d.manufacturer="NONE"
+//                    }
+//                    if(d.description.trim()==""){
+//                        d.description="NONE"
+//                    }
+//                });
+//                createTable(data);
+//
+//                document.getElementById("gen_btn").onclick=getData;
+//
+//                function getData(){
+//                    if(data == '')
+//                        return;
+//
+//                    JSONToCSVConvertor(data, "-DeviceCatalogExplorer", true);
+//                };
+//            });
+//
+//            $('#previewData').popover({
+//                html: true,
+//                content: $('#tableDiv')
+//            });
+
+//            if(jQuery.browser.name === 'mozilla' || jQuery.browser.name === 'safari') {
+//                setTimeout(function(){
+//                    $('#previewData').click(function(){
+//                        $('#previewData').popover('toggle');
+//                    });
+//                }, 1000);
+//            }
+    </script>
+}

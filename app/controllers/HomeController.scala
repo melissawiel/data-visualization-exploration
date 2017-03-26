@@ -29,6 +29,10 @@ class HomeController @Inject() extends Controller {
     Ok(views.html.contact())
   }
 
+  def restaurantCirclePacking = Action {
+    Ok(views.html.restaurantCirclePacking())
+  }
+
   def test = Action {
     Ok(views.html.test())
   }
