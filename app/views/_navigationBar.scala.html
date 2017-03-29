@@ -1,0 +1,24 @@
+@(activeId: String)
+
+<style type="text/css">
+    #navigation-bar{top:133px;left:-1px;position:absolute;z-index:21}
+    #navigation-bar{width:1002px;height:65px}
+</style>
+
+@*------------- NAVIGATION -----------*@
+<div id="navigation-bar" class="wsb-element-navigation" data-type="element">
+    <div style="width: 1002px; height: 65px;" class="wsb-nav nav_theme nav-text-center nav-horizontal nav-btn-center wsb-navigation-rendered-top-level-container">
+        <ul class="wsb-navigation-rendered-top-level-menu ">
+            <li id="nav-item-about" style="width: auto" class="navigation-item"><a href="/about">About</a></li>
+            <li id="nav-item-resume" style="width: auto" class="navigation-item"><a href="/resume">Resume</a></li>
+            <li id="nav-item-mini-project" style="width: auto" class="navigation-item"><a href="/restaurantCirclePacking">Mini Project</a></li>
+            <li id="nav-item-contact" style="width: auto" class="navigation-item"><a href="/contact">Contact</a></li>
+        </ul>
+    </div>
+</div>
+
+<script type='text/javascript'>
+
+    $(".navigation-item").removeClass("active");
+    $("#"+'@activeId').addClass("active");
+</script>

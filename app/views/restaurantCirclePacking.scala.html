@@ -1,124 +1,75 @@
 @()
 
 @main() {
-    <style>
-    text {
-    font-size : 15px !important ;
-    text-anchor : middle ;
-    text-shadow : 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff ;
-    }
 
-    .axis path,
-    .axis line {
-    fill : none ;
-    stroke : #000 ;
-    shape-rendering : crispEdges ;
-    }
+    <style type="text/css">
+        text {
+        font-size : 15px !important ;
+        text-anchor : middle ;
+        text-shadow : 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff ;
+        }
 
-    .node {
-    cursor : pointer ;
-    }
+        .axis path,
+        .axis line {
+        fill : none ;
+        stroke : #000 ;
+        shape-rendering : crispEdges ;
+        }
 
-    circle : hover {
-    stroke : #3c70a0 ;
-    stroke-width : 2px ;
-    }
+        .node {
+        cursor : pointer ;
+        }
 
-    svg {
-    position : relative ;
-    margin-left: -270px;
-    margin-top : 30px ;
-    }
+        circle : hover {
+        stroke : #3c70a0 ;
+        stroke-width : 2px ;
+        }
+
+        svg {
+        position : relative ;
+        margin-left: -270px;
+        margin-top : 30px ;
+        }
+        #restaurant-line{top:304px;left:47px;position:absolute;z-index:134}
+        #restaurant-line .msw-line-element{width:599px;height:20px}
+        #restaurant-header{top:250px;left:49px;position:absolute;z-index:133}
+        #restaurant-header .txt{width:583px;height:38px}
+        #restaurant-text{top:324px;left:48px;position:absolute;z-index:47}
+        #restaurant-text .txt{width:592px;height:84px}
+        #msw-canvas-template-page{height:1489px}
     </style>
 
-    <style type="text/css"> #wsb-element-f8a01590-121b-4946-943c-88e8a36bba93 .wsb-line-element{width:900px;height:20px}#wsb-element-f8091430-f226-44cb-851e-401a03a3fe50{top:2387px;left:50px;position:absolute;z-index:129}#wsb-element-f8091430-f226-44cb-851e-401a03a3fe50 .txt{width:897px;height:121px}#wsb-element-f4aec671-2691-4de3-8a31-7b51ee0cea9c{top:1871px;left:50px;position:absolute;z-index:126}#wsb-element-f4aec671-2691-4de3-8a31-7b51ee0cea9c .txt{width:897px;height:185px}#wsb-element-eee3acc3-4280-4a81-92b4-762fdacf3c37{top:324px;left:48px;position:absolute;z-index:47}#wsb-element-eee3acc3-4280-4a81-92b4-762fdacf3c37 .txt{width:592px;height:84px}#wsb-element-e20095a4-4dce-4b2d-86d1-ca05d901123d{top:1158px;left:48px;position:absolute;z-index:131}#wsb-element-e20095a4-4dce-4b2d-86d1-ca05d901123d .wsb-line-element{width:900px;height:20px}#wsb-element-e10a5d99-d30d-431b-85b9-b881e9b69c61{top:563px;left:47px;position:absolute;z-index:130}#wsb-element-e10a5d99-d30d-431b-85b9-b881e9b69c61 .wsb-line-element{width:900px;height:20px}#wsb-element-dd60c955-5c9b-4a93-b548-e3fc0513b463{top:304px;left:47px;position:absolute;z-index:134}#wsb-element-dd60c955-5c9b-4a93-b548-e3fc0513b463 .wsb-line-element{width:599px;height:20px}#wsb-element-d3770677-88ad-445a-9b8a-71c5518a3ee5{top:2687px;left:646px;position:absolute;z-index:49}#wsb-element-d3770677-88ad-445a-9b8a-71c5518a3ee5 .wsb-button{width:181px;height:27px}#wsb-element-b28a8664-ce8d-4b5b-a94d-b1f49ac825b6{top:1105px;left:50px;position:absolute;z-index:123}#wsb-element-b28a8664-ce8d-4b5b-a94d-b1f49ac825b6 .txt{width:897px;height:38px}#wsb-element-55fd17b9-3be5-4349-9783-cde13a1cdd18{top:2166px;left:50px;position:absolute;z-index:128}#wsb-element-55fd17b9-3be5-4349-9783-cde13a1cdd18 .txt{width:897px;height:185px}#wsb-element-4cb5b6c8-3a30-4bf1-a12d-e2113c946b16{top:583px;left:49px;position:absolute;z-index:71}#wsb-element-4cb5b6c8-3a30-4bf1-a12d-e2113c946b16 .txt{width:276px;height:486px}#wsb-element-35d544c1-54b1-408c-87cc-0910198dc56b{top:2092px;left:50px;position:absolute;z-index:127}#wsb-element-35d544c1-54b1-408c-87cc-0910198dc56b .txt{width:897px;height:38px}#wsb-element-33b11f68-6781-4c81-9956-d699c5fda2bd{top:820px;left:651px;position:absolute;z-index:73}#wsb-element-33b11f68-6781-4c81-9956-d699c5fda2bd .wsb-shape{width:244px;height:212px;padding:0px;background:#fff;box-sizing:content-box;-moz-box-sizing:content-box}#wsb-element-2dde8c47-8b6e-423d-bacf-ad2d1a9b6538{top:1173px;left:50px;position:absolute;z-index:124}#wsb-element-2dde8c47-8b6e-423d-bacf-ad2d1a9b6538 .txt{width:897px;height:377px}#wsb-element-22364fee-9474-4a28-b7ec-74da76d6e2ec{top:868px;left:676px;position:absolute;z-index:74}#wsb-element-22364fee-9474-4a28-b7ec-74da76d6e2ec .txt{width:194px;height:117px}#wsb-element-1369c596-d012-4e01-b81c-f4b088351241{top:250px;left:49px;position:absolute;z-index:133}#wsb-element-1369c596-d012-4e01-b81c-f4b088351241 .txt{width:583px;height:38px}#wsb-element-f8d44759-fb19-4e91-bd03-9cbc12af39f0{top:90px;left:817px;position:absolute;z-index:114}#wsb-element-f8d44759-fb19-4e91-bd03-9cbc12af39f0 .txt{width:131px;height:28px}#wsb-element-1da53110-6813-43b1-92b8-381f27049288{top:102px;left:454px;position:absolute;z-index:96}#wsb-element-1da53110-6813-43b1-92b8-381f27049288 .wsb-image-inner{}#wsb-element-1da53110-6813-43b1-92b8-381f27049288 .wsb-image-inner div{width:98px;height:35px;position:relative;overflow:hidden}#wsb-element-1da53110-6813-43b1-92b8-381f27049288 img{position:absolute}#wsb-element-b76f7e50-4381-42ea-ba7b-d9582fd83dfd{top:1586px;left:50px;position:absolute;z-index:125}#wsb-element-b76f7e50-4381-42ea-ba7b-d9582fd83dfd .txt{width:897px;height:281px}#wsb-element-873f9491-15f3-4a0c-80b4-a3e6e59d8dcd{top:509px;left:49px;position:absolute;z-index:122}#wsb-element-873f9491-15f3-4a0c-80b4-a3e6e59d8dcd .txt{width:897px;height:38px}#wsb-element-d1acf9c5-e60e-4878-a757-9ea9571cc1b3{top:583px;left:377.5px;position:absolute;z-index:72}#wsb-element-d1acf9c5-e60e-4878-a757-9ea9571cc1b3 .txt{width:237px;height:430px}#wsb-element-8c4faddb-a3b6-4579-af9f-1d164ec9cfe5{top:250px;left:682px;position:absolute;z-index:135}#wsb-element-8c4faddb-a3b6-4579-af9f-1d164ec9cfe5 .wsb-image-inner{}#wsb-element-8c4faddb-a3b6-4579-af9f-1d164ec9cfe5 .wsb-image-inner div{width:219px;height:281px;position:relative;overflow:hidden}#wsb-element-8c4faddb-a3b6-4579-af9f-1d164ec9cfe5 img{position:absolute}#wsb-element-c0a4818b-30b4-40e7-b45c-a02db315891e{top:133px;left:-1px;position:absolute;z-index:21}#wsb-element-c0a4818b-30b4-40e7-b45c-a02db315891e{width:1002px;height:65px}#wsb-element-a62e27ff-9854-4728-b093-6fe524b81217{top:36px;left:874px;position:absolute;z-index:108}#wsb-element-a62e27ff-9854-4728-b093-6fe524b81217 .wsb-button{width:26px;height:32px}#wsb-element-7de17877-ad5d-4b40-b00c-f8aa175504d9{top:0px;left:-755px;position:absolute;z-index:18}#wsb-element-7de17877-ad5d-4b40-b00c-f8aa175504d9 .wsb-shape{width:2502px;height:168px;padding:0px;background:#fff;box-sizing:content-box;-moz-box-sizing:content-box}#wsb-element-e5cf3eac-7d22-4e25-93f5-eacc8bd383d6{top:2647px;left:112px;position:absolute;z-index:48}#wsb-element-e5cf3eac-7d22-4e25-93f5-eacc8bd383d6 .txt{width:415px;height:67px}#wsb-element-749bceca-042a-4f04-87be-a04c7bbd8d85{top:583px;left:665px;position:absolute;z-index:121}#wsb-element-749bceca-042a-4f04-87be-a04c7bbd8d85 .txt{width:237px;height:234px}#wsb-element-da15ce62-24dc-4648-8ed1-6c104861595d{top:31px;left:41px;position:absolute;z-index:25}#wsb-element-da15ce62-24dc-4648-8ed1-6c104861595d .txt{width:587px;height:85px}#wsb-element-c97f4349-cd8d-4d7b-b4d7-e34ec4da5b97{top:85px;left:801px;position:absolute;z-index:109}#wsb-element-c97f4349-cd8d-4d7b-b4d7-e34ec4da5b97 .wsb-line-element{width:162px;height:20px}#wsb-element-47f4fd7b-eb5f-4dfd-b124-eb5f3c4258a7{top:36px;left:815px;position:absolute;z-index:104}#wsb-element-47f4fd7b-eb5f-4dfd-b124-eb5f3c4258a7 .wsb-button{width:26px;height:32px}#wsb-element-cc5df938-3b06-4a45-a9b4-4930290f5e69{top:39px;left:927px;position:absolute;z-index:107}#wsb-element-cc5df938-3b06-4a45-a9b4-4930290f5e69 .wsb-button{width:25px;height:32px}#wsb-element-366f36ec-2a69-4a96-b02f-fed4c2555ea7{top:47px;left:200px;position:absolute;z-index:97}#wsb-element-366f36ec-2a69-4a96-b02f-fed4c2555ea7 .txt{width:600px;height:28px} </style>
-    <div class="wsb-canvas body" style="background-color: #fbfbfb; background-position-x: center; background-position-y: top; background-position: center top; background-repeat: no-repeat; position: fixed; top: 0; bottom: 0; left: 0; right: 0; width: 100%; height: 100%; overflow: hidden;">
-        <div class="wsb-canvas-page-container" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; width: 100%; height: 100%; overflow: auto;">
-            <div id="wsb-canvas-template-page" class="wsb-canvas-page page" style="height: 1289px; margin: auto; width: 1000px; background-color: transparent; position: relative; margin-top: 0px">
-                <div id="wsb-canvas-template-container" style="position: absolute;">
-                    <div id="wsb-element-eee3acc3-4280-4a81-92b4-762fdacf3c37" class="wsb-element-text" data-type="element">
-                        <div class="col-lg-12 pa-viz-module">
-                            <div id="story">
-                                <p style="width: 600px;">
-                                    Maneuver through the different categorization levels to learn more about the restaurants that Charleston has to offer. The first level categorizes by neighborhood. The second level categorizes by food category. The third level categorizes by the average user ratings and nested inside this level are the restaurants with a final count of how many users have reviewed them.
-                                </p>
-                            </div>
-                            <div id="chart">
-                            </div>
-                            <div id="tableDivOne" style="display : none">
-                                <div id="tableDiv"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="wsb-element-dd60c955-5c9b-4a93-b548-e3fc0513b463" class="wsb-element-line" data-type="element">
-                        <div class="wsb-line-element" style="width: 599px; height: 20px; width: 599px;border-top: 2px solid #999;opacity: 1;filter: alpha(opacity=1);"></div>
-                    </div>
-                    <div id="wsb-element-1369c596-d012-4e01-b81c-f4b088351241" class="wsb-element-text" data-type="element">
-                        <div class="txt ">
-                            <h1>Restaurant Data Visualization
-                                @*<button id="previewData" class="btn glyphicon glyphicon-eye-open databtn" role="button" data-toggle="popover" data-trigger="focus" data-placement="bottom"></button>*@
-                                @*<button class="btn glyphicon glyphicon-cloud-download databtn" id="gen_btn"></button>*@
-                            </h1>
-                        </div>
-                    </div>
-                    <div id="wsb-element-f8d44759-fb19-4e91-bd03-9cbc12af39f0" class="wsb-element-text" data-type="element">
-                        <div class="txt ">
-                            <p style="text-align: center;"><span class="editor_follow">Follow Me</span></p>
-                        </div>
-                    </div>
-                    <div id="wsb-element-c0a4818b-30b4-40e7-b45c-a02db315891e" class="wsb-element-navigation" data-type="element">
-                        <div style="width: 1002px; height: 65px;" class="wsb-nav nav_theme nav-text-center nav-horizontal nav-btn-center wsb-navigation-rendered-top-level-container" id="wsb-nav-c0a4818b-30b4-40e7-b45c-a02db315891e">
-                            <style> #wsb-nav-c0a4818b-30b4-40e7-b45c-a02db315891e.wsb-navigation-rendered-top-level-container ul > li:hover, #wsb-nav-c0a4818b-30b4-40e7-b45c-a02db315891e.wsb-navigation-rendered-top-level-container ul > li:hover > a, #wsb-nav-c0a4818b-30b4-40e7-b45c-a02db315891e.wsb-navigation-rendered-top-level-container ul > li.active:hover, #wsb-nav-c0a4818b-30b4-40e7-b45c-a02db315891e.wsb-navigation-rendered-top-level-container ul > li.active > a:hover, #wsb-nav-c0a4818b-30b4-40e7-b45c-a02db315891e.wsb-navigation-rendered-top-level-container ul > li.active .nav-subnav li:hover, #wsb-nav-c0a4818b-30b4-40e7-b45c-a02db315891e.wsb-navigation-rendered-top-level-container ul > li.active .nav-subnav li:hover > a {background-color: !important;color: !important;} </style>
-                            <ul class="wsb-navigation-rendered-top-level-menu ">
-                                <li style="width: auto"><a href="/about" target="" data-title="About" data-pageid="00000000-0000-0000-0000-000472195214" data-url="/about">About</a></li>
-                                <li style="width: auto"><a href="/resume" target="" data-title="Resume" data-pageid="6ded1cb8-85f7-4c88-9c81-0f95983003af" data-url="/resume">Resume</a></li>
-                                <li style="width: auto" class="active"><a href="/restaurantCirclePacking" target="" data-title="RestaurantCirclePacking" data-pageid="6ded1cb8-85f7-4c88-9c81-0f95983003ak" data-url="/restaurantCirclePacking">Mini Project</a></li>
-                                <li style="width: auto"><a href="/contact" target="" data-title="Contact" data-pageid="00000000-0000-0000-0000-000472205204" data-url="/contact">Contact</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div id="wsb-element-a62e27ff-9854-4728-b093-6fe524b81217" class="wsb-element-button" data-type="element">
-                        <div><a id="wsb-button-a62e27ff-9854-4728-b093-6fe524b81217" class="wsb-button button_share_ig " href="https://www.instagram.com/melissawiel/" target="_blank"><span class="button-content wsb-button-content" style="white-space:nowrap">Instagram</span></a></div>
-                    </div>
-                    <div id="wsb-element-7de17877-ad5d-4b40-b00c-f8aa175504d9" class="wsb-element-shape" data-type="element">
-                        <div class="wsb-shape shape_topBar customStyle "></div>
-                    </div>
-                    <div id="wsb-element-da15ce62-24dc-4648-8ed1-6c104861595d" class="wsb-element-text" data-type="element">
-                        <div class="txt ">
-                            <div><span class="editor_logo">Melissa Wiel-Nilson<br></span></div>
-                            <div><span class="editor_tagline">Software Data Scientist<br></span></div>
-                        </div>
-                    </div>
-                    <div id="wsb-element-c97f4349-cd8d-4d7b-b4d7-e34ec4da5b97" class="wsb-element-line" data-type="element">
-                        <div class="wsb-line-element" style="width: 162px; height: 20px; width: 162px;border-top: 1px solid #d6d7d8;opacity: 1;filter: alpha(opacity=1);"></div>
-                    </div>
-                    <div id="wsb-element-47f4fd7b-eb5f-4dfd-b124-eb5f3c4258a7" class="wsb-element-button" data-type="element">
-                        <div><a id="wsb-button-47f4fd7b-eb5f-4dfd-b124-eb5f3c4258a7" class="wsb-button button_share_li " href="https://www.linkedin.com/in/melissa-wiel-464a163a/" target="_blank"><span class="button-content wsb-button-content" style="white-space:nowrap">Enter text</span></a></div>
-                    </div>
-                    <div id="wsb-element-cc5df938-3b06-4a45-a9b4-4930290f5e69" class="wsb-element-button" data-type="element">
-                        <div><a id="wsb-button-cc5df938-3b06-4a45-a9b4-4930290f5e69" class="wsb-button button_share_fb " href="http://www.facebook.com/melissa.nilson.1" target="_blank"><span class="button-content wsb-button-content" style="white-space:nowrap">Enter text</span></a></div>
-                    </div>
-                </div>
-            </div>
-            <div id="wsb-canvas-template-footer" class="wsb-canvas-page-footer footer" style="margin: auto; margin-top:200px; min-height:100px; height: 137px; width: 1000px; position: relative;">
-                <div id="wsb-canvas-template-footer-container" class="footer-container" style="position: absolute">
-                    <div id="wsb-element-366f36ec-2a69-4a96-b02f-fed4c2555ea7" class="wsb-element-text" >
-                        <div class="txt ">
-                            <p style="text-align: center;"><span class="editor_footer">Copyright © Melissa Wiel-Nilson. All rights reserved.</span></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="view-as-mobile" style="padding:10px;position:relative;text-align:center;display:none;"><a href="#" onclick="return false;">View on Mobile</a></div>
+    @_navigationBar("nav-item-mini-project")
+
+    <div id="restaurant-header" class="msw-element-text" data-type="element">
+        <div class="txt ">
+            <h1>Restaurant Data Visualization
+                @*<button id="previewData" class="btn glyphicon glyphicon-eye-open databtn" role="button" data-toggle="popover" data-trigger="focus" data-placement="bottom"></button>*@
+                @*<button class="btn glyphicon glyphicon-cloud-download databtn" id="gen_btn"></button>*@
+            </h1>
         </div>
     </div>
-
-
+    <div id="restaurant-line" class="msw-element-line" data-type="element">
+        <div class="msw-line-element" style="width: 599px; height: 20px; width: 599px;border-top: 2px solid #999;opacity: 1;filter: alpha(opacity=1);"></div>
+    </div>
+    <div id="restaurant-text" class="msw-element-text" data-type="element">
+        <div class="col-lg-12 pa-viz-module">
+            <div id="story">
+                <p style="width: 600px;">
+                    Maneuver through the different categorization levels to learn more about the restaurants that Charleston has to offer. The first level categorizes by neighborhood. The second level categorizes by food category. The third level categorizes by the average user ratings and nested inside this level are the restaurants with a final count of how many users have reviewed them.
+                </p>
+            </div>
+            <div id="tableDivOne" style="display : none">
+                <div id="tableDiv"></div>
+            </div>
+        </div>
+    </div>
 
     <link rel="stylesheet" href="//rawgithub.com/Caged/d3-tip/master/examples/example-styles.css">
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <script src="@routes.Assets.versioned("javascripts/d3.tip.js")"></script>
-    <script>
+    <sc type='text/javascript'>
+ipt>
             var w = 1438,
                     h = 1000,
                     r = 960,
@@ -133,34 +84,30 @@
                     .html(function(d) {
                         console.log(d);
                         var text = "";
-                        if(d.parent){
-                            if(d.parent.parent && d.parent.parent.name != "NONE" && d.parent.parent.name != "DEVICES"){
-                                text = text + d.parent.parent.name + " ";
-                            };
+                        if(d.pare
+                            text = text + "<strong>Neighborhood: </strong>" + d.name;
 
-                            if(d.parent.name != "NONE" && d.parent.name != "DEVICES"){
-                                text = text + d.parent.name + " ";
-                            }
+                            //food type
+                            if(d.parent.parent){
+                                text = text + "<br><strong>Food Category: </strong>" + d.name;
+                                //rating
+                                if(d.parent.parent.parent){
+                                    text = text + "<br><strong>Rating: </strong>" + d.name;
+                                    // restaurant
+                                    if(d.parent.parent.parent.parent){
+                                        if(d.name){
+                                            text = text + "<br><strong>Restaurant: </strong>" + d.name;
+                                        };
+
+                                        if(d.reviewCount){
+                                            text = text + "<br><strong>Yelp User Review Count: </strong>" + d.reviewCount;
+                                        };
+                                    };
+                                };
+                            };   }
                         };
 
-                        if(d.name){
-                            if(d.name == "NONE"){
-                                text = text + "- NO DESCRIPTION";
-                            } else {
-                                text = text + d.name;
-                            };
-                        };
-
-                        if(d.reviewCount){
-                            if(d.reviewCount == 1){
-                                text = text + "<br/><strong>" + d.reviewCount + " DEVICE</strong>";
-                            } else {
-                                text = text + "<br/><strong>" + d.reviewCount + " DEVICES</strong>";
-                            };
-                        };
-
-                        return text;
-                        console.log(text);
+                        return tet);
                     })
 
             var pack = d3.layout.pack()
